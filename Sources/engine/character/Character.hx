@@ -17,11 +17,17 @@ class Character extends PhysSprite {
 	public var movement:Vec2 = new Vec2(0, 0);
 	public var player:Player;
 	public var pendingActions:Array<CharacterAction> = new Array<CharacterAction>();
-	public var animations:Array<Animation> = new Array<Animation>();
+	public var animations:Map<String, Animation> = new Map<String, Animation>();
 	public var animation:Animation;
+	public var animationIsFlipped:Bool = false;
+	public var noFrictionMaterial:Material = new Material(0, 0, 0);
+	public var material:Material = new Material(0, 1, 2);
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState):Void {
 		super(x, y, width, height, playState, true);
+		this.loadGraphics('crate');
+		this.addAnimation('idle', new Animation(this.x, this.y, 64, 64, playState, 'idle', 60));
+		this.addAnimation('run', new Animation(this.x, this.y, 64, 64, playState, 'run', 60));
 	}
 
 	override public function update():Void {
@@ -50,8 +56,8 @@ class Character extends PhysSprite {
 		this.body.cbTypes.add(cast(this.state, PlayState).characterCbType);
 	}
 
-	public function addAnimation(animation:Animation) {
-		this.animations.push(animation);
+	public function addAnimation(key:String, animation:Animation) {
+		this.animations.set(key, animation);
 		if (this.animation == null) {
 			this.animation = animation;
 		}
@@ -96,15 +102,35 @@ class Character extends PhysSprite {
 				adjustedImpulse.x = (Math.abs(adjustedImpulse.x) > Math.abs(this.body.velocity.x)) ? (adjustedImpulse.x - this.body.velocity.x) : 0;
 			}
 			this.body.applyImpulse(adjustedImpulse);
-			this.body.setShapeMaterials(new Material(0, 0, 0));
+			this.body.setShapeMaterials(this.noFrictionMaterial);
 		} else {
-			this.body.setShapeMaterials(new Material(0, 1, 2));
+			this.body.setShapeMaterials(this.material);
 		}
 	}
 
 	public function setXMovement(val:Float):Void {
 		this.movement.x = val;
+		this.updateAnimationForXMovement();
 		if (val > 1) { this.movement.normalise(); }
+	}
+
+	public function updateAnimationForXMovement():Void {
+		if (this.animation != null) {
+			if (this.movement.x > 0) {
+				this.animationIsFlipped = false;
+				this.setAnimation('run');
+			} else if (this.movement.x < 0) {
+				this.animationIsFlipped = true;
+				this.setAnimation('run');
+			} else {
+				this.setAnimation('idle');
+			}
+			this.animation.isFlippedVertically = this.animationIsFlipped;
+		}
+	}
+
+	public function setAnimation(key:String) {
+		this.animation = this.animations.get(key);
 	}
 
 	public function jump():Void {

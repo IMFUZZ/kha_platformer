@@ -17,7 +17,7 @@
     <content url="file://$MODULE_DIR$/../..">
       <sourceFolder url="file://C:\HaxeToolkit\haxe\lib\Kha\Sources" isTestSource="false" />
       <sourceFolder url="file://C:\HaxeToolkit\haxe\lib\Kha\Backends\HTML5" isTestSource="false" />
-      <sourceFolder url="file://c:\Repos\kha_experimentation2\Sources" isTestSource="false" />
+      <sourceFolder url="file://c:\Repos\kha_platformer\Sources" isTestSource="false" />
       <sourceFolder url="file://C:\HaxeToolkit\haxe\lib\nape\2,0,20" isTestSource="false" />
 
     </content>

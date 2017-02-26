@@ -28,7 +28,7 @@
 		<option noInlineOnDebug="False" />
 		<option mainClass="Main" />
 		<option enabledebug="False" />
-		<option additional="-D nape&#xA;-D sys_g1&#xA;-D sys_g2&#xA;-D sys_g3&#xA;-D sys_g4&#xA;-D sys_a1&#xA;-D sys_a2&#xA;-D canvas_id=khanvas&#xA;-D script_name=kha&#xA;-D webgl&#xA;-D sys_debug-html5&#xA;-D sys_debug_html5&#xA;-D kha&#xA;-D kha_version=1611&#xA;-D kha_output=&quot;c:\Repos\kha_experimentation2\build\debug-html5\kha.js&quot;&#xA;-debug&#xA;" />
+		<option additional="-D nape&#xA;-D sys_g1&#xA;-D sys_g2&#xA;-D sys_g3&#xA;-D sys_g4&#xA;-D sys_a1&#xA;-D sys_a2&#xA;-D canvas_id=khanvas&#xA;-D script_name=kha&#xA;-D webgl&#xA;-D sys_debug-html5&#xA;-D sys_debug_html5&#xA;-D kha&#xA;-D kha_version=1611&#xA;-D kha_output=&quot;c:\Repos\kha_platformer\build\debug-html5\kha.js&quot;&#xA;-debug&#xA;" />
 	</build>
 	<!-- haxelib libraries -->
 	<haxelib>

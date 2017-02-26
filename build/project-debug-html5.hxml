@@ -1,6 +1,6 @@
 -cp C:\HaxeToolkit\haxe\lib\Kha\Sources
 -cp C:\HaxeToolkit\haxe\lib\Kha\Backends\HTML5
--cp c:\Repos\kha_experimentation2\Sources
+-cp c:\Repos\kha_platformer\Sources
 -cp C:\HaxeToolkit\haxe\lib\nape\2,0,20
 -cp C:\HaxeToolkit\haxe\lib\nape\2,0,20
 -D nape

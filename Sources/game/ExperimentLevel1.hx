@@ -8,16 +8,12 @@ import engine.character.Character;
 import engine.graphics.PhysSprite;
 import engine.state.PlayState;
 
-import engine.graphics.Animation;
-
 class ExperimentLevel1 extends PlayState {
 	public function new() {
 		super();
 		var character:Character = new Character(100, 100, 64, 64, this);
-		character.loadGraphics('crate');
 		character.setBody(BodyType.DYNAMIC, new Vec2(character.x, character.y));
 		Shared.game.players[0].setCharacter(character);
-		character.addAnimation(new Animation(character.x, character.y, 64, 64, this, 'run', 60));
 		this.add(character);
 		for (x in 0...10) {
 			var physSprite:PhysSprite = new PhysSprite(100+Std.random(32), x*-32, 32, 32, this);
