@@ -16,7 +16,7 @@ class Project {
 	public function new() {
 		Shared.init(this);
 		this.players.push(new Player(1));
-		this.state = new ExperimentLevel1(); 
+		this.state = new ExperimentLevel1();
 	}
 
 	public function update(): Void {

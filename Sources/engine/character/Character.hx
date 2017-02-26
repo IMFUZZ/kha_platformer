@@ -39,6 +39,8 @@ class Character extends PhysSprite {
 			this.animation.y = this.y - this.rotation.center.y;
 			this.animation.update();
 		}
+		this.state.camera.x = this.x;
+		this.state.camera.y = this.y;
 	}
 
 	override public function render(framebuffer:Framebuffer) {
