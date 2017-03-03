@@ -27,13 +27,13 @@ class ExperimentLevel1 extends PlayState {
 		physSprite.setBody(BodyType.DYNAMIC, new Vec2(physSprite.x, physSprite.y));
 		this.add(physSprite);
 		
-		var floor:PhysSprite = new PhysSprite(500, 500, 1000, 128, this);
+		var floor:PhysSprite = new PhysSprite(500, 500, 10000, 128, this);
 		floor.loadGraphics('crate');
 		floor.setBody(BodyType.STATIC, new Vec2(floor.x, floor.y));
 		this.add(floor);
 	}
 
-	override public function update() {
-		super.update();
+	override public function update(elapsed:Float) {
+		super.update(elapsed);
 	}
 }

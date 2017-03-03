@@ -14,14 +14,13 @@ class EntityContainer implements IEntity {
 		this.entities = (entities != null) ? entities : new Array<IEntity>();
 	}
 
-	public function update() {
+	public function update(elapsed:Float) {
 		for (entity in this.entities) {
-			entity.update();
+			entity.update(elapsed);
 		}
 	}
 
 	public function render(framebuffer:Framebuffer) {
-		// USE THE THIS.X AND THIS.Y ATTRIBUTES TO TRANSLATE EACH SUB ENTITIES
 		for (entity in this.entities) {
 			entity.render(framebuffer);
 		}

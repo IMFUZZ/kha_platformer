@@ -24,32 +24,26 @@ class Sprite implements IEntity {
 		this.width = width;
 		this.height = height;
 		this.state = state;
+		this.rotation = new Rotation(new kha.math.Vector2(this.width/2, this.height/2), 0);
 	}
 
-	public function update(): Void {}
+	public function update(elapsed:Float): Void {
+		this.rotation.center.x = this.x - this.state.camera.centerX;
+		this.rotation.center.y = this.y - this.state.camera.centerY;
+	}
 
 	public function render(framebuffer: Framebuffer): Void {
 		var graphics = framebuffer.g2;
 		if (this._image != null) {
-			graphics.pushRotation(this.rotation.angle, this.x, this.y);
-			graphics.drawScaledImage(this._image, this.x - this.rotation.center.x, this.y - this.rotation.center.y, this.width, this.height);
+			graphics.pushRotation(this.rotation.angle, this.rotation.center.x, this.rotation.center.y);
+			graphics.drawScaledImage(this._image, this.x - this.width/2, this.y - this.height/2, this.width, this.height);
 			graphics.popTransformation();
 		}
 	}
 
 	public function loadGraphics(filename:String) {
 		if (Reflect.hasField(Assets.images, filename)) {
-			var image:Image = Reflect.getProperty(Assets.images, filename);
-			if (image == null) {
-				Assets.loadImage(filename, _onImageLoad);
-			} else {
-				this._onImageLoad(image);
-			}
+			this._image = Reflect.getProperty(Assets.images, filename);
 		}
-	}
-
-	private function _onImageLoad(_image:Image):Void {
-		this._image = _image;
-		this.rotation = new Rotation(new kha.math.Vector2(this.width/2, this.height/2), 0);
 	}
 }

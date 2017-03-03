@@ -10,16 +10,17 @@ class State extends EntityContainer {
 	public var camera:Camera;
 	override public function new() {
 		super();
-		this.camera = new Camera();
+		this.camera = new Camera(0, 0, 1024, 768);
 	}
 
-	override public function update() {
-		super.update();		
+	override public function update(elapsed:Float) {
+		super.update(elapsed);
+		this.camera.update(elapsed);
 	}
 
 	override public function render(framebuffer:Framebuffer) {
-		//this.camera.set(framebuffer.g2);
+		this.camera.set(framebuffer.g2);
 		super.render(framebuffer);
-		//this.camera.unset(framebuffer.g2);
+		this.camera.unset(framebuffer.g2);
 	}
 }

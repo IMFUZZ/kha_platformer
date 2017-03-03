@@ -2,6 +2,7 @@ package;
 
 import kha.Framebuffer;
 import kha.Color;
+import kha.Scheduler;
 
 import engine.Shared;
 import engine.Player;
@@ -10,6 +11,8 @@ import engine.state.State;
 import game.ExperimentLevel1;
 
 class Project {
+	public var before:Float = 0.0;
+	public var elapsed:Float = 0.0;
 	public var state:State;
 	public var players:Array<Player> = new Array<Player>();
 
@@ -20,7 +23,12 @@ class Project {
 	}
 
 	public function update(): Void {
-		this.state.update();
+		var currentTime:Float = Scheduler.time();
+		this.elapsed = currentTime - this.before;
+		this.before = currentTime;
+		if (this.elapsed > 0) {
+			this.state.update(this.elapsed);
+		}
 	}
 
 	public function updatePlayers() {

@@ -23,7 +23,7 @@ class Animation extends Sprite {
 		this.initFrameIndexes(0, nbFrames);
 	}
 
-	override public function update() {
+	override public function update(elapsed:Float) {
 		this.nbFramesWithoutChange++;
 		this.index = (this.index+1)%this.nbFrames;
 	}
@@ -49,9 +49,9 @@ class Animation extends Sprite {
 			var framePosition:Vector2 = this.frameIndexes[this.index];
 			graphics.pushRotation(this.rotation.angle, this.x, this.y);
 			if (isFlippedVertically) {
-				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this.width, this.height, this.x+this.width, this.y, -this.width, this.height);
+				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this.width, this.height, this.x+this.width/2, this.y-this.height/2, -this.width, this.height);
 			} else {
-				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this.width, this.height, this.x, this.y, this.width, this.height);
+				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this.width, this.height, this.x-this.width/2, this.y-this.height/2, this.width, this.height);
 			}
 			graphics.popTransformation();
 			

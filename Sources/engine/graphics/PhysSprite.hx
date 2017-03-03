@@ -21,8 +21,8 @@ class PhysSprite extends Sprite {
 		this.space = playState.space;
 	}
 
-	override public function update(): Void {
-		super.update();
+	override public function update(elapsed:Float): Void {
+		super.update(elapsed);
 		if (this.body != null) {
 			this.x = this.body.position.x;
 			this.y = this.body.position.y;
@@ -34,14 +34,6 @@ class PhysSprite extends Sprite {
 
 	override public function render(framebuffer: Framebuffer): Void {
 		super.render(framebuffer);
-		if (this._image != null) {
-			if (this.debug) {
-				var graphics = framebuffer.g2;
-				graphics.pushRotation(this.rotation.angle, this.x, this.y);
-				graphics.drawRect(this.x - this.rotation.center.x, this.y - this.rotation.center.y, this.width, this.height);
-				graphics.popTransformation();
-			}
-		}
 	}
 
 	public function setBody(bodyType:BodyType, position:Vec2) {

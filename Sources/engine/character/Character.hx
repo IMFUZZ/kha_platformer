@@ -9,6 +9,7 @@ import engine.graphics.PhysSprite;
 import engine.input.InputManager;
 import engine.character.actions.*;
 import engine.graphics.Animation;
+import engine.graphics.AnimationManager;
 
 class Character extends PhysSprite {
 	public var isRunning:Bool = false;
@@ -17,37 +18,32 @@ class Character extends PhysSprite {
 	public var movement:Vec2 = new Vec2(0, 0);
 	public var player:Player;
 	public var pendingActions:Array<CharacterAction> = new Array<CharacterAction>();
-	public var animations:Map<String, Animation> = new Map<String, Animation>();
-	public var animation:Animation;
-	public var animationIsFlipped:Bool = false;
+	public var animationManager:AnimationManager;
 	public var noFrictionMaterial:Material = new Material(0, 0, 0);
 	public var material:Material = new Material(0, 1, 2);
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState):Void {
 		super(x, y, width, height, playState, true);
 		this.loadGraphics('crate');
-		this.addAnimation('idle', new Animation(this.x, this.y, 64, 64, playState, 'idle', 60));
-		this.addAnimation('run', new Animation(this.x, this.y, 64, 64, playState, 'run', 60));
+		this.animationManager = new AnimationManager(x, y, 'idle', [
+			'idle' => new Animation(this.x, this.y, 64, 64, playState, 'idle', 60),
+			'run' => new Animation(this.x, this.y, 64, 64, playState, 'run', 60)
+		]);
 	}
 
-	override public function update():Void {
-		super.update();
+	override public function update(elapsed:Float):Void {
+		super.update(elapsed);
 		this.executePendingActions();
 		this.move(this.movement);
-		if (this.animation != null && this.rotation != null) {
-			this.animation.x = this.x - this.rotation.center.x;
-			this.animation.y = this.y - this.rotation.center.y;
-			this.animation.update();
-		}
-		this.state.camera.x = this.x;
-		this.state.camera.y = this.y;
+		this.animationManager.x = this.x;
+		this.animationManager.y = this.y;
+		this.state.camera.setPosition(this.x, this.y);
+		this.animationManager.update(elapsed);
 	}
 
 	override public function render(framebuffer:Framebuffer) {
 		super.render(framebuffer);
-		if (this.animation != null) {
-			this.animation.render(framebuffer);
-		}
+		this.animationManager.render(framebuffer);
 	}
 
 	override public function setBody(bodyType:BodyType, position:Vec2):Void {
@@ -56,13 +52,6 @@ class Character extends PhysSprite {
 		this.body.userData.name = "character";
 		this.body.userData.character = this;
 		this.body.cbTypes.add(cast(this.state, PlayState).characterCbType);
-	}
-
-	public function addAnimation(key:String, animation:Animation) {
-		this.animations.set(key, animation);
-		if (this.animation == null) {
-			this.animation = animation;
-		}
 	}
 
 	public function executePendingActions():Void {
@@ -81,8 +70,6 @@ class Character extends PhysSprite {
 			if (state != 0.0) {
 				switch (button) {
 					case Y: action = new JumpAction(this);
-					case UP: this.state.timePaceRatio *= 2;
-					case DOWN: this.state.timePaceRatio /= 2;
 					default: null;
 				};
 			} else {
@@ -117,22 +104,15 @@ class Character extends PhysSprite {
 	}
 
 	public function updateAnimationForXMovement():Void {
-		if (this.animation != null) {
-			if (this.movement.x > 0) {
-				this.animationIsFlipped = false;
-				this.setAnimation('run');
-			} else if (this.movement.x < 0) {
-				this.animationIsFlipped = true;
-				this.setAnimation('run');
-			} else {
-				this.setAnimation('idle');
-			}
-			this.animation.isFlippedVertically = this.animationIsFlipped;
+		if (this.movement.x > 0) {
+			this.animationManager.isFlippedVertically = false;
+			this.animationManager.set('run');
+		} else if (this.movement.x < 0) {
+			this.animationManager.isFlippedVertically = true;
+			this.animationManager.set('run');
+		} else {
+			this.animationManager.set('idle');
 		}
-	}
-
-	public function setAnimation(key:String) {
-		this.animation = this.animations.get(key);
 	}
 
 	public function jump():Void {

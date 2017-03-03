@@ -6,7 +6,6 @@ import nape.callbacks.*;
 
 class PlayState extends State {
 	public var space:Space;
-	public var msPerCycle:Float = 1/128;
 	public var gravity:Vec2 = new Vec2(0, 1200);
 
 	public var anyCbType:CbType = new CbType();
@@ -29,8 +28,8 @@ class PlayState extends State {
 		collision.int1.castBody.userData.character.checkIfGrounded();
 	}
 
-	override public function update() {
-		super.update();
-		this.space.step(this.msPerCycle*this.timePaceRatio);
+	override public function update(elapsed:Float) {
+		super.update(elapsed);
+		this.space.step(elapsed*this.timePaceRatio);
 	}
 }
