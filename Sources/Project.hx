@@ -12,23 +12,27 @@ import game.ExperimentLevel1;
 
 class Project {
 	public var before:Float = 0.0;
-	public var elapsed:Float = 0.0;
 	public var state:State;
 	public var players:Array<Player> = new Array<Player>();
 
 	public function new() {
 		Shared.init(this);
 		this.players.push(new Player(1));
-		this.state = new ExperimentLevel1();
+		this.state = new ExperimentLevel1(0, 0, 1024, 768);
 	}
 
 	public function update(): Void {
-		var currentTime:Float = Scheduler.time();
-		this.elapsed = currentTime - this.before;
-		this.before = currentTime;
-		if (this.elapsed > 0) {
-			this.state.update(this.elapsed);
+		var elapsed:Float = this.updateElapsedTime();
+		if (elapsed > 0) {
+			this.state.update(elapsed);
 		}
+	}
+
+	public function updateElapsedTime():Float {
+		var currentTime:Float = Scheduler.time();
+		var elapsed:Float = currentTime - this.before;
+		this.before = currentTime;
+		return elapsed;
 	}
 
 	public function updatePlayers() {

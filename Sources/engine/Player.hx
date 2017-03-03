@@ -10,26 +10,24 @@ class Player implements IControllable {
 
 	public function new(id:Int, ?character:Character = null) {
 		this.id = id;
-		this.setCharacter(character);
 		this.inputManager = new InputManager(this);
-	}
-
-	public function update() {}
-
-	public function setCharacter(character:Character) {
 		if (character != null) {
-			this.detachCharacter();	
-			this.character = character;
-			this.character.player = this;
+			this.setCharacter(character);
 		}
 	}
 
-	public function hasCharacterAttached() {
-		return (this.character != null);
+	public function update() {
+		
+	}
+
+	public function setCharacter(character:Character) {
+		this.detachCharacter();	
+		this.character = character;
+		this.character.player = this;
 	}
 
 	public function detachCharacter() {
-		if (this.hasCharacterAttached()) {
+		if (this.character != null) {
 			this.character.player = null;
 			this.character = null;
 		}
@@ -44,7 +42,7 @@ class Player implements IControllable {
 	}*/
 
 	public function onButtonStateChange(inputManager:InputManager, button:Button, state:Float):Void {
-		if (this.hasCharacterAttached()) {
+		if (this.character != null) {
 			this.character.onButtonStateChange(inputManager, button, state);
 		}
 	}

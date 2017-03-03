@@ -9,8 +9,8 @@ import engine.graphics.PhysSprite;
 import engine.state.PlayState;
 
 class ExperimentLevel1 extends PlayState {
-	public function new() {
-		super();
+	public function new(x:Float, y:Float, width:Float, height:Float) {
+		super(x, y, width, height);
 		var character:Character = new Character(100, 100, 64, 64, this);
 		character.setBody(BodyType.DYNAMIC, new Vec2(character.x, character.y));
 		Shared.game.players[0].setCharacter(character);

@@ -8,9 +8,13 @@ import engine.graphics.Camera;
 class State extends EntityContainer {
 	public var timePaceRatio:Float = 1.0;
 	public var camera:Camera;
-	override public function new() {
-		super();
-		this.camera = new Camera(0, 0, 1024, 768);
+	public var width:Float;
+	public var height:Float;
+	override public function new(x:Float, y:Float, width:Float, height:Float) {
+		super(x, y);
+		this.width = width;
+		this.height = height;
+		this.camera = new Camera(x, y, width, height);
 	}
 
 	override public function update(elapsed:Float) {
