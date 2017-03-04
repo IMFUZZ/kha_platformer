@@ -81,7 +81,6 @@ class InputManager {
 	}
 
 	// - REMAPPING INPUTS
-
 	public function remapKeyboardKey(char:String, button:Button) {
 		this.keyboardMapping.set(char, button);
 	}
@@ -91,20 +90,17 @@ class InputManager {
 	}
 
 	// - SETTING KEYBOARD
-
 	public function setKeyboard(keyboard:Keyboard) {
 		keyboard.notify(this.onKeyDown, this.onKeyUp);
 	}
 
-	// - SETTING/UNSETTING GAMEPADS
-
+	// - SETTING GAMEPADS
 	public function setGamepad(gamepad:Gamepad) {
 		gamepad.notify(onGamepadAxisMove, onGamepadButton);
 	}
 
 	// -------------------- INPUTS --------------------
 	// KEYBOARD
-
 	public function identifyButtonFromKey(key:Key, char:String):Button {
 		var id:String = switch (key) {
 			case UP: 'up';
