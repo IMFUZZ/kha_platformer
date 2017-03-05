@@ -10,6 +10,7 @@ class State extends EntityContainer {
 	public var camera:Camera;
 	public var width:Float;
 	public var height:Float;
+
 	override public function new(x:Float, y:Float, width:Float, height:Float) {
 		super(x, y);
 		this.width = width;
@@ -19,7 +20,6 @@ class State extends EntityContainer {
 
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
-		this.camera.update(elapsed);
 	}
 
 	override public function render(framebuffer:Framebuffer) {

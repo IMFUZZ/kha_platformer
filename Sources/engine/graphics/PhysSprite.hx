@@ -11,24 +11,21 @@ import engine.state.PlayState;
 
 class PhysSprite extends Sprite {
 	public var body:Body;
-	public var physicsEnabled:Bool = true;
 	public var space:Space;
 	public var isGrounded:Bool;
+	private var _physicsEnabled:Bool = true;
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState, physicsEnabled:Bool = true) {
 		super(x, y, width, height, playState);
-		this.physicsEnabled = physicsEnabled;
+		this._physicsEnabled = physicsEnabled;
 		this.space = playState.space;
 	}
 
 	override public function update(elapsed:Float): Void {
 		super.update(elapsed);
 		if (this.body != null) {
-			this.x = this.body.position.x;
-			this.y = this.body.position.y;
-			if (this.rotation != null) {
-				this.rotation.angle = this.body.rotation;
-			}
+			this.setPosition(this.body.position.x, this.body.position.y);
+			this.rotation.angle = this.body.rotation;
 		}	
 	}
 
@@ -36,22 +33,22 @@ class PhysSprite extends Sprite {
 		super.render(framebuffer);
 	}
 
-	public function setBody(bodyType:BodyType, position:Vec2) {
-		this.body = new Body(bodyType, position);
+	public function setBody(bodyType:BodyType) {
+		this.body = new Body(bodyType, new Vec2(this.x, this.y));
 		this.body.cbTypes.add(cast(this.state, PlayState).anyCbType);
 		this.body.shapes.add(new Polygon(Polygon.box(this.width, this.height)));
 		this.body.align();
 		this.body.mass = 10;
 		this.body.userData.name = "any";
 		this.body.userData.entity = this;
-		this.enablePhysics(physicsEnabled);
+		this.enablePhysics(this._physicsEnabled);
 	}
 
 	public function enablePhysics(isEnable:Bool):Bool {
 		if (this.body != null) {
 			this.body.space = isEnable ? this.space : null;	
 		}
-		return this.physicsEnabled = isEnable;
+		return this._physicsEnabled = isEnable;
 	}
 
 	public function checkIfGrounded() {
@@ -62,6 +59,7 @@ class PhysSprite extends Sprite {
 				this.body.bounds.width, 
 				1), 
 			false, true, null);
+		// DJDUBE - SHOULD CHECK FOR A BODY THAT THIS SPRITE CAN 'BOUNCE' FROM (EX : BACKGROUND BODIES SHOULDN'T SET ISGROUNDED)
 		return this.isGrounded = (bodiesUnderChar.length > 1);
 	}
 }

@@ -14,6 +14,8 @@ class EntityContainer implements IEntity {
 		this.entities = (entities != null) ? entities : new Array<IEntity>();
 	}
 
+	public function setPosition(x:Float, y:Float) {}
+
 	public function update(elapsed:Float) {
 		for (entity in this.entities) {
 			entity.update(elapsed);

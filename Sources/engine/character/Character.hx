@@ -8,8 +8,8 @@ import engine.state.PlayState;
 import engine.graphics.PhysSprite;
 import engine.input.InputManager;
 import engine.character.actions.*;
-import engine.graphics.Animation;
-import engine.graphics.AnimationManager;
+import engine.graphics.animation.Animation;
+import engine.graphics.animation.AnimationManager;
 
 class Character extends PhysSprite {
 	public var isRunning:Bool = false;
@@ -19,26 +19,34 @@ class Character extends PhysSprite {
 	public var player:Player;
 	public var pendingActions:Array<CharacterAction> = new Array<CharacterAction>();
 	public var animationManager:AnimationManager;
-	public var noFrictionMaterial:Material = new Material(0, 0, 0);
-	public var material:Material = new Material(0, 1, 2);
+	
+	public var rootAnimation:AnimationManager;
+	public var rightArmAnimation:AnimationManager;
+	public var LeftArmAnimation:AnimationManager;
+	public var legsAnimation:AnimationManager;
+	
+	private var materials:Map<String, Material> = [
+		'noFriction' => new Material(0, 0, 0),
+		'normal' => new Material(0, 1, 2)
+	];
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState):Void {
 		super(x, y, width, height, playState, true);
-		this.loadGraphics('crate');
 		this.animationManager = new AnimationManager(x, y, 'idle', [
 			'idle' => new Animation(this.x, this.y, 64, 64, playState, 'idle', 60),
 			'run' => new Animation(this.x, this.y, 64, 64, playState, 'run', 60)
 		]);
+		this.setBody(BodyType.DYNAMIC);
 	}
 
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
 		this.executePendingActions();
 		this.move(this.movement);
-		this.animationManager.x = this.x;
-		this.animationManager.y = this.y;
-		this.state.camera.setPosition(this.x, this.y);
+		this.animationManager.setPosition(this.x, this.y);
 		this.animationManager.update(elapsed);
+		// DJDUBE - MAKE THE CAMERA INDEPENDENT FROM IT'S TARGET (HAS TO BE UPDATED RIGHT AFTER THE TARGET)
+		this.state.camera.update(elapsed);
 	}
 
 	override public function render(framebuffer:Framebuffer) {
@@ -46,8 +54,8 @@ class Character extends PhysSprite {
 		this.animationManager.render(framebuffer);
 	}
 
-	override public function setBody(bodyType:BodyType, position:Vec2):Void {
-		super.setBody(bodyType, position);
+	override public function setBody(bodyType:BodyType):Void {
+		super.setBody(bodyType);
 		this.body.allowRotation = false;
 		this.body.userData.name = "character";
 		this.body.userData.character = this;
@@ -91,9 +99,9 @@ class Character extends PhysSprite {
 				adjustedImpulse.x = (Math.abs(adjustedImpulse.x) > Math.abs(this.body.velocity.x)) ? (adjustedImpulse.x - this.body.velocity.x) : 0;
 			}
 			this.body.applyImpulse(adjustedImpulse);
-			this.body.setShapeMaterials(this.noFrictionMaterial);
+			this.body.setShapeMaterials(this.materials.get('noFriction'));
 		} else {
-			this.body.setShapeMaterials(this.material);
+			this.body.setShapeMaterials(this.materials.get('normal'));
 		}
 	}
 

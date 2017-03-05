@@ -14,17 +14,25 @@ class Sprite implements IEntity {
 	public var y:Float;
 	public var width:Float;
 	public var height:Float;
+	public var imageX:Float;
+	public var imageY:Float;
 	public var state:State;
 	public var rotation:Rotation;
-	public var debug:Bool = false;
+	public var debug:Bool = true;
 	
 	public function new(x:Float, y:Float, width:Float, height:Float, state:State) {
-		this.x = x;
-		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.setPosition(x, y);
 		this.state = state;
 		this.rotation = new Rotation(new kha.math.Vector2(this.width/2, this.height/2), 0);
+	}
+
+	public function setPosition(x:Float, y:Float) {
+		this.x = x;
+		this.y = y;
+		this.imageX = this.x - this.width/2;
+		this.imageY = this.y - this.height/2;
 	}
 
 	public function update(elapsed:Float): Void {
@@ -36,7 +44,13 @@ class Sprite implements IEntity {
 		var graphics = framebuffer.g2;
 		if (this._image != null) {
 			graphics.pushRotation(this.rotation.angle, this.rotation.center.x, this.rotation.center.y);
-			graphics.drawScaledImage(this._image, this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+			graphics.drawScaledImage(this._image, this.imageX, this.imageY, this.width, this.height);
+			graphics.popTransformation();
+		}
+		if (debug) {
+			var graphics = framebuffer.g2;
+			graphics.pushRotation(this.rotation.angle, this.rotation.center.x, this.rotation.center.y);
+			graphics.drawRect(this.imageX, this.imageY, this.width, this.height);
 			graphics.popTransformation();
 		}
 	}

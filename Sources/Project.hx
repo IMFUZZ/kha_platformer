@@ -35,11 +35,11 @@ class Project {
 		return elapsed;
 	}
 
-	public function updatePlayers() {
+/*	public function updatePlayers() {
 		for (player in this.players) {
 			player.update();
 		}
-	}
+	}*/
 
 	public function render(framebuffer:Framebuffer): Void {
 		framebuffer.g2.begin();

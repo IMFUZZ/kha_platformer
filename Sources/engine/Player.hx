@@ -17,7 +17,7 @@ class Player implements IControllable {
 	}
 
 	public function update() {
-		
+
 	}
 
 	public function setCharacter(character:Character) {
@@ -32,14 +32,6 @@ class Player implements IControllable {
 			this.character = null;
 		}
 	}
-
-/*	public function setGamepad(gamepad:Gamepad):Void {
-		this.inputManager.setGamepad(gamepad);
-	}
-
-	public function hasGamepad(?gamepadID:Int = -1):Bool {
-		return this.inputManager.hasGamepad(gamepadID);
-	}*/
 
 	public function onButtonStateChange(inputManager:InputManager, button:Button, state:Float):Void {
 		if (this.character != null) {
