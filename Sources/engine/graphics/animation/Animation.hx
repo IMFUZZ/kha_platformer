@@ -12,7 +12,6 @@ typedef AnimationData =  {
 }
 
 class Animation extends Sprite {
-	public var isFlippedVertically:Bool = false;
 	private var frameIndexes:Array<Vector2> = new Array<Vector2>();
 	private var _nbFrames:Int;
 	private var _index:Int = 0;
@@ -29,13 +28,17 @@ class Animation extends Sprite {
 		this.initFrameIndexes(0, nbFrames);
 	}
 
-	override public function update(elapsed:Float) {
-		this._nbFramesWithoutChange++;
-		this._index = (this._index+1)%this._nbFrames;
+	override public function setPosition(x:Float, y:Float) {
+		this.x = x;
+		this.y = y;
 	}
 
-	public function resetFrameIndex() {
-		this._nbFramesWithoutChange = this._index = 0;
+	override public function update(elapsed:Float) {
+		this._nbFramesWithoutChange++;
+		if (this.state.timePaceRatio > 0 && this._nbFramesWithoutChange >= (1/this.state.timePaceRatio)) {
+			this._nbFramesWithoutChange = 0;
+			this._index = (this._index+1)%this._nbFrames;
+		}
 	}
 
 	public function initFrameIndexes(start:Int, end:Int) {
@@ -53,14 +56,26 @@ class Animation extends Sprite {
 		if (this._image != null) {
 			var graphics = framebuffer.g2;
 			var framePosition:Vector2 = this.frameIndexes[this._index];
-			graphics.pushRotation(this.rotation.angle, this.x, this.y);
-			if (isFlippedVertically) {
-				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this._FRAMEWIDTH, this._FRAMEHEIGHT, this.x+this.width/2, this.y-this.height/2, -this.width, this.height);
-			} else {
-				graphics.drawScaledSubImage(this._image, framePosition.x, framePosition.y, this._FRAMEWIDTH, this._FRAMEHEIGHT, this.x-this.width/2, this.y-this.height/2, this.width, this.height);
-			}
+			var rotationX:Float = this.x - this.state.camera.centerX;
+			var rotationY:Float = this.y - this.state.camera.centerY;
+			var imageX:Float = this.isFlippedVertically ? this.x+this.width/2 : this.x-this.width/2;
+			var imageY:Float = this.isFlippedVertically ? this.y-this.height/2 : this.y-this.height/2;
+			var imageWidth:Float = this.isFlippedVertically ? -this.width : this.width;
+			var imageHeight:Float = this.height;
+			graphics.pushRotation(this.rotationAngle, rotationX, rotationY);
+			graphics.drawScaledSubImage(
+					this._image,
+					framePosition.x,
+					framePosition.y,
+					this._FRAMEWIDTH,
+					this._FRAMEHEIGHT,
+					// USE IMAGEX AND IMAGEY (The delay between update and render causes the positions to be incorrect)
+					imageX,
+					imageY,
+					imageWidth,
+					imageHeight
+				);
 			graphics.popTransformation();
-			
 		}
 	}
 }

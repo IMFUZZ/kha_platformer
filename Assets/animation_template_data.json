@@ -1,0 +1,46 @@
+{
+	"id" : "armIdle",
+	"frames" : [
+		{
+			"xOffset" : 10,
+			"yOffset" : 10,
+			"anchors" : {
+				"hand" : {
+					"x" : 0,
+					"y" : 0
+				}
+			}
+
+		},
+		{
+			"xOffset" : 10,
+			"yOffset" : 10,
+			"anchors" : {
+				"hand" : {
+					"x" : 0,
+					"y" : 0
+				}
+			}
+		},
+		{
+			"xOffset" : 10,
+			"yOffset" : 10,
+			"anchors" : {
+				"hand" : {
+					"x" : 0,
+					"y" : 0
+				}
+			}
+		},
+		{
+			"xOffset" : 10,
+			"yOffset" : 10,
+			"anchors" : {
+				"hand" : {
+					"x" : 0,
+					"y" : 0
+				}
+			}
+		}
+	]
+}

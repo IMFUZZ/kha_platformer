@@ -23,6 +23,7 @@ class AnimationManager implements IEntity {
 	public function setPosition(x:Float, y:Float) {
 		this.x = x;
 		this.y = y;
+		this.animation.setPosition(this.x, this.y);
 	}
 
 	public function set(animationKey:String) {
@@ -30,7 +31,6 @@ class AnimationManager implements IEntity {
 	}
 
 	public function update(elapsed:Float) {
-		this.animation.setPosition(this.x, this.y);
 		this.animation.isFlippedVertically = this.isFlippedVertically;
 		this.animation.update(elapsed);
 	}

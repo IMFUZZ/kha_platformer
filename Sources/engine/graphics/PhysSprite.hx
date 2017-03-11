@@ -13,6 +13,7 @@ class PhysSprite extends Sprite {
 	public var body:Body;
 	public var space:Space;
 	public var isGrounded:Bool;
+	public var isFacingRight:Bool = true;
 	private var _physicsEnabled:Bool = true;
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState, physicsEnabled:Bool = true) {
@@ -24,8 +25,8 @@ class PhysSprite extends Sprite {
 	override public function update(elapsed:Float): Void {
 		super.update(elapsed);
 		if (this.body != null) {
+			this.rotationAngle = this.body.rotation;
 			this.setPosition(this.body.position.x, this.body.position.y);
-			this.rotation.angle = this.body.rotation;
 		}	
 	}
 

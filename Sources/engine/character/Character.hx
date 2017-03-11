@@ -15,9 +15,13 @@ class Character extends PhysSprite {
 	public var isRunning:Bool = false;
 	public var walkSpeed:Int = 512;
 	public var runRatio:Float = 1.25;
+	public var reachDistance:Float = 32;
 	public var movement:Vec2 = new Vec2(0, 0);
 	public var player:Player;
 	public var pendingActions:Array<CharacterAction> = new Array<CharacterAction>();
+	
+	public var liftedObject:engine.objects.Object = null;
+
 	public var animationManager:AnimationManager;
 	
 	public var rootAnimation:AnimationManager;
@@ -71,13 +75,13 @@ class Character extends PhysSprite {
 
 	public function onButtonStateChange(inputManager:InputManager, button:Button, state:Float):Void {
 		var action:CharacterAction = null;
-		if ([LEFT, RIGHT].indexOf(button) != -1) {
+		if (button == LEFT || button == RIGHT) {
 			action = new SetXMovementAction(this, inputManager);
 		} else {
-			// If button is pressed
 			if (state != 0.0) {
 				switch (button) {
 					case Y: action = new JumpAction(this);
+					case B: action = new PickUpObjectAction(this);
 					default: null;
 				};
 			} else {
@@ -113,10 +117,10 @@ class Character extends PhysSprite {
 
 	public function updateAnimationForXMovement():Void {
 		if (this.movement.x > 0) {
-			this.animationManager.isFlippedVertically = false;
+			this.animationManager.isFlippedVertically = this.isFlippedVertically = false;
 			this.animationManager.set('run');
 		} else if (this.movement.x < 0) {
-			this.animationManager.isFlippedVertically = true;
+			this.animationManager.isFlippedVertically = this.isFlippedVertically = true;
 			this.animationManager.set('run');
 		} else {
 			this.animationManager.set('idle');
@@ -127,5 +131,19 @@ class Character extends PhysSprite {
 		if (this.isGrounded) {
 			this.body.applyImpulse(new Vec2(0, -5000));
 		}
+	}
+
+	public function takeObject(object:engine.objects.Object) {
+		this.liftedObject = object;
+		var phase:Float = this.body.rotation - object.body.rotation;
+		var weldPoint = Vec2.get(this.body.position.x, this.body.position.y);
+		var weldJoint:nape.constraint.Constraint = new nape.constraint.WeldJoint(this.body, object.body, this.body.worldPointToLocal(weldPoint, true), object.body.worldPointToLocal(weldPoint, true), phase);
+		weldPoint.dispose();
+		weldJoint.stiff = false;
+		var frequency = 20.0;
+        var damping = 1.0;
+		weldJoint.frequency = frequency;
+		weldJoint.damping = damping;
+		weldJoint.space = space;
 	}
 }
