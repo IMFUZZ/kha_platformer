@@ -54,8 +54,6 @@ class Sprite implements IEntity {
 	}
 
 	public function loadGraphics(filename:String) {
-		if (Reflect.hasField(Assets.images, filename)) {
-			this._image = Reflect.getProperty(Assets.images, filename);
-		}
+		this._image = Reflect.getProperty(Assets.images, filename);
 	}
 }

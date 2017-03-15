@@ -1,0 +1,50 @@
+/* 
+	SCENE_DATA_TEMPLATE
+	VERSION : 0.1
+*/
+
+{
+	"version" : "<date_time>",
+	"scene" : {
+		"stage": {
+			"gravity" : 1500,
+			"elements" : [ /* Should be ordered by z depth */
+				{
+					"id" : "mountains",
+					"depth" : /*z*/-100,
+					"location" : {
+						"x" : 100,
+						"y" : 100
+					},
+					"dimensions" : {
+						"width": 100,
+						"height": 100 
+					},
+					"image_filename" : "mountains", /*.png*/
+				},
+				{
+					"id" : "floor_1",
+					"depth" : /*z*/0,
+					"location" : {
+						"x" : 100,
+						"y" : 100
+					},
+					"dimensions" : {
+						"width": 100,
+						"height": 100 
+					},
+					"image_filename" : "floor_1" /*.png*/
+				}
+			]
+		},
+		/* Contains informations about the characters in the scene */
+		/* If not main player defined, choose spawn point randomly */
+		/* If not spawn point defined, spawn at (0, 0) */
+		"characters" : [
+			{
+				"location" : [/*x*/0, /*y*/0],
+				"ClassName" : "MainCharacter"
+			}
+		],
+	}
+}

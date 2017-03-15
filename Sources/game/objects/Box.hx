@@ -1,7 +1,6 @@
 package game.objects;
 
 import engine.objects.Object;
-import engine.graphics.PhysSprite;
 import engine.state.PlayState;
 import nape.phys.BodyType;
 
@@ -10,5 +9,6 @@ class Box extends Object {
 		super(x, y, width, height, playState, physicsEnabled);
 		this.loadGraphics('crate');
 		this.setBody(BodyType.DYNAMIC);
+		this.body.mass = 2;
 	}
 }

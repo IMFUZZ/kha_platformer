@@ -133,11 +133,22 @@ class Character extends PhysSprite {
 		}
 	}
 
+	public function dropObject() {
+		if (this.liftedObject != null) {
+
+		}
+	}
+
 	public function takeObject(object:engine.objects.Object) {
 		this.liftedObject = object;
-		var phase:Float = this.body.rotation - object.body.rotation;
 		var weldPoint = Vec2.get(this.body.position.x, this.body.position.y);
-		var weldJoint:nape.constraint.Constraint = new nape.constraint.WeldJoint(this.body, object.body, this.body.worldPointToLocal(weldPoint, true), object.body.worldPointToLocal(weldPoint, true), phase);
+		var weldJoint:nape.constraint.Constraint = new nape.constraint.WeldJoint(
+			this.body,
+			object.body,
+			this.body.worldPointToLocal(weldPoint, true),
+			object.body.worldPointToLocal(weldPoint, true),
+			object.body.rotation
+		);
 		weldPoint.dispose();
 		weldJoint.stiff = false;
 		var frequency = 20.0;
