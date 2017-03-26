@@ -16,9 +16,7 @@ class Player implements IControllable {
 		}
 	}
 
-	public function update() {
-
-	}
+	public function update() {}
 
 	public function setCharacter(character:Character) {
 		this.detachCharacter();	

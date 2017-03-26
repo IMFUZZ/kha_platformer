@@ -1,16 +1,19 @@
 package engine.base;
 
 import kha.Framebuffer;
+import engine.state.State;
 
 class EntityContainer implements IEntity {
 	public var x:Float;
 	public var y:Float;
 	public var entities:Array<IEntity>;
 	public var debug:Bool = false;
+	public var state:State;
+	public var alive:Bool = true;
 	
-	public function new(?x:Float = 0, ?y:Float = 0, ?entities:Array<IEntity>) {
-		this.x = x;
-		this.y = y;
+	public function new(state:State, ?entities:Array<IEntity>) {
+		this.x = this.y = 0;
+		this.state = state;
 		this.entities = (entities != null) ? entities : new Array<IEntity>();
 	}
 
@@ -18,7 +21,11 @@ class EntityContainer implements IEntity {
 
 	public function update(elapsed:Float) {
 		for (entity in this.entities) {
-			entity.update(elapsed);
+			if (entity.alive == false) {
+				entity.destroy();
+			} else {
+				entity.update(elapsed);
+			}
 		}
 	}
 
@@ -34,5 +41,16 @@ class EntityContainer implements IEntity {
 
 	public function remove(entity:IEntity) {
 		this.entities.remove(entity);
+	}
+
+	public function kill() {
+		this.alive = false;
+		for (entity in this.entities) {
+			entity.kill();
+		}
+	}
+
+	public function destroy() {
+		this.state.remove(this);
 	}
 }

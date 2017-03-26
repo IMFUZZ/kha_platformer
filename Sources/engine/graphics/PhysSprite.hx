@@ -63,4 +63,9 @@ class PhysSprite extends Sprite {
 		// DJDUBE - SHOULD CHECK FOR A BODY THAT THIS SPRITE CAN 'BOUNCE' FROM (EX : BACKGROUND BODIES SHOULDN'T SET ISGROUNDED)
 		return this.isGrounded = (bodiesUnderChar.length > 1);
 	}
+	
+	override public function destroy() {
+		super.destroy();
+		this.space.bodies.remove(this.body);
+	}
 }

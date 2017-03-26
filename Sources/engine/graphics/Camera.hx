@@ -16,15 +16,11 @@ class Camera {
 	private var _scaleMatrix:FastMatrix3 = FastMatrix3.identity();
 	private var _target:IEntity = null;
 
-	public function get_x() {
-		return this.x;
-	}
-
 	public function new(x:Float, y:Float, width:Float, height:Float, ?target:IEntity = null) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
-		this.height = width;
+		this.height = height;
 		this.follow(target);
 		this.realignCenter();
 	}

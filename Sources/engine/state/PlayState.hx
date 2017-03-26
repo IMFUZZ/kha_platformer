@@ -13,26 +13,8 @@ class PlayState extends State {
 	public var dynamicCbType:CbType = new CbType();
 	public var characterCbType:CbType = new CbType();
 
-	public function new(x:Float, y:Float, width:Float, height:Float) {
-		super(x, y, width, height);
-		this.space.listeners.add(
-			new InteractionListener(
-				CbEvent.BEGIN, 
-				InteractionType.COLLISION, 
-				characterCbType, 
-				anyCbType, 
-				onCharacterBeginCollision
-			)
-		);
-		this.space.listeners.add(
-			new InteractionListener(
-				CbEvent.END, 
-				InteractionType.COLLISION, 
-				characterCbType, 
-				anyCbType, 
-				onCharacterEndCollision
-			)
-		);
+	public function new(config:String) {
+		super(config);
 	}
 
 	override public function update(elapsed:Float) {
@@ -61,6 +43,24 @@ class PlayState extends State {
 			}
 			this.add(sprite);
 		}
+		this.space.listeners.add(
+			new InteractionListener(
+				CbEvent.BEGIN, 
+				InteractionType.COLLISION, 
+				characterCbType, 
+				anyCbType, 
+				onCharacterBeginCollision
+			)
+		);
+		this.space.listeners.add(
+			new InteractionListener(
+				CbEvent.END, 
+				InteractionType.COLLISION, 
+				characterCbType, 
+				anyCbType, 
+				onCharacterEndCollision
+			)
+		);
 	}
 
 	public function onCharacterBeginCollision(collision:InteractionCallback):Void {

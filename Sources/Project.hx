@@ -18,7 +18,7 @@ class Project {
 	public function new() {
 		Shared.init(this);
 		this.players.push(new Player(1));
-		this.state = new ExperimentLevel1(0, 0, 1024, 768);
+		this.state = new ExperimentLevel1("state");
 	}
 
 	public function update(): Void {
@@ -26,6 +26,7 @@ class Project {
 		if (elapsed > 0) {
 			this.state.update(elapsed);
 		}
+		this.updatePlayers();
 	}
 
 	public function updateElapsedTime():Float {
@@ -35,11 +36,11 @@ class Project {
 		return elapsed;
 	}
 
-/*	public function updatePlayers() {
+	public function updatePlayers() {
 		for (player in this.players) {
 			player.update();
 		}
-	}*/
+	}
 
 	public function render(framebuffer:Framebuffer): Void {
 		framebuffer.g2.begin();

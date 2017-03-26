@@ -7,12 +7,13 @@ import engine.Shared;
 import engine.character.Character;
 import engine.graphics.PhysSprite;
 import engine.state.PlayState;
+import engine.graphics.particle.*;
 import game.objects.*;
 import game.platforms.*;
 
 class ExperimentLevel1 extends PlayState {
-	public function new(x:Float, y:Float, width:Float, height:Float) {
-		super(x, y, width, height);
+	public function new(config:String) {
+		super(config);
 		var character:Character = new Character(0, 0, 32, 64, this);
 		Shared.game.players[0].setCharacter(character);
 		this.add(character);
@@ -21,6 +22,8 @@ class ExperimentLevel1 extends PlayState {
 			var box:Box = new Box(100+Std.random(32), Std.random(32), 32, 32, this);
 			this.add(box);
 		}
+		var emitter:Emitter = new Emitter(-100, -100, this);
+		this.add(emitter);
 	}
 
 	override public function update(elapsed:Float) {

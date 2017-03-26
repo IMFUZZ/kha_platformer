@@ -11,12 +11,12 @@ class State extends EntityContainer {
 	public var width:Float;
 	public var height:Float;
 
-	override public function new(x:Float, y:Float, width:Float, height:Float) {
-		super(x, y);
-		this.width = width;
-		this.height = height;
-		this.init("state");
-		this.camera = new Camera(x, y, width, height);
+	override public function new(config:String) {
+		super(this);
+		this.width = 1280;
+		this.height = 720;
+		this.camera = new Camera(0, 0, width, height);
+		this.init(config);
 	}
 
 	override public function update(elapsed:Float) {

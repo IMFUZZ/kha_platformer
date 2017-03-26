@@ -23,12 +23,6 @@ class Character extends PhysSprite {
 	public var liftedObject:engine.objects.Object = null;
 
 	public var animationManager:AnimationManager;
-	
-	public var rootAnimation:AnimationManager;
-	public var rightArmAnimation:AnimationManager;
-	public var LeftArmAnimation:AnimationManager;
-	public var legsAnimation:AnimationManager;
-	
 	private var materials:Map<String, Material> = [
 		'noFriction' => new Material(0, 0, 0),
 		'normal' => new Material(0, 1, 2)
@@ -36,7 +30,7 @@ class Character extends PhysSprite {
 
 	override public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState):Void {
 		super(x, y, width, height, playState, true);
-		this.animationManager = new AnimationManager(x, y, 'idle', [
+		this.animationManager = new AnimationManager(x, y, this.state, 'idle', [
 			'idle' => new Animation(this.x, this.y, 64, 64, playState, 'idle', 60),
 			'run' => new Animation(this.x, this.y, 64, 64, playState, 'run', 60)
 		]);

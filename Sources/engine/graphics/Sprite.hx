@@ -9,6 +9,7 @@ import engine.state.State;
 
 class Sprite implements IEntity {
 	public var debug:Bool = true;
+	public var alive:Bool = true;
 	public var x:Float;
 	public var y:Float;
 	public var width:Float;
@@ -55,5 +56,13 @@ class Sprite implements IEntity {
 
 	public function loadGraphics(filename:String) {
 		this._image = Reflect.getProperty(Assets.images, filename);
+	}
+
+	public function kill():Void {
+		this.alive = false;
+	}
+
+	public function destroy() {
+		this.state.remove(this);
 	}
 }
