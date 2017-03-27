@@ -17,11 +17,20 @@ class Emitter extends Empty {
 		this.emitionCycle += this.emitionSpeed;
 		while (this.emitionCycle - 1.0 > 0) {
 			this.emitionCycle -= 1.0;
-			var particle:Particle = new Particle(this.x, this.y, 10, 10, cast(this.state, PlayState), true);
-			particle.setBody(nape.phys.BodyType.DYNAMIC);
-			particle.body.mass = 2;
-			particle.debug = true;
-			this.state.add(particle);
+			this.emit();
 		}
+	}
+
+	public function emit() {
+		this.state.add(
+			new Particle(
+				this.x,
+				this.y,
+				10,
+				10,
+				cast(this.state, PlayState),
+				true
+			)
+		);
 	}
 }

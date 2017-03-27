@@ -1,7 +1,7 @@
 package engine.graphics.animation;
 
 import kha.math.Vector2;
-import kha.Framebuffer;
+import kha.Canvas;
 
 import engine.graphics.Sprite;
 
@@ -52,9 +52,9 @@ class Animation extends Sprite {
 		}
 	}
 
-	override public function render(framebuffer:Framebuffer) {
+	override public function render(canvas:Canvas) {
 		if (this._image != null) {
-			var graphics = framebuffer.g2;
+			var graphics = canvas.g2;
 			var framePosition:Vector2 = this.frameIndexes[this._index];
 			var rotationX:Float = this.x - this.state.camera.centerX;
 			var rotationY:Float = this.y - this.state.camera.centerY;

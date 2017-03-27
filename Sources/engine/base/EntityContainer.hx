@@ -1,6 +1,6 @@
 package engine.base;
 
-import kha.Framebuffer;
+import kha.Canvas;
 import engine.state.State;
 
 class EntityContainer implements IEntity {
@@ -29,9 +29,9 @@ class EntityContainer implements IEntity {
 		}
 	}
 
-	public function render(framebuffer:Framebuffer) {
+	public function render(canvas:Canvas) {
 		for (entity in this.entities) {
-			entity.render(framebuffer);
+			entity.render(canvas);
 		}
 	}
 

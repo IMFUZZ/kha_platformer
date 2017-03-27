@@ -1,7 +1,6 @@
 package engine.graphics.animation;
 
-import kha.Framebuffer;
-import engine.base.IEntity;
+import kha.Canvas;
 import engine.state.State;
 import engine.base.Empty;
 
@@ -35,8 +34,8 @@ class AnimationManager extends Empty {
 		this.animation.update(elapsed);
 	}
 
-	override public function render(framebuffer:Framebuffer) {
-		super.render(framebuffer);
-		this.animation.render(framebuffer);
+	override public function render(canvas:Canvas) {
+		super.render(canvas);
+		this.animation.render(canvas);
 	}
 }

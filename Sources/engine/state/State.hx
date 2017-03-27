@@ -1,7 +1,8 @@
 package engine.state;
 
-import kha.Framebuffer;
+import kha.Canvas;
 import kha.Assets;
+
 import engine.base.EntityContainer;
 import engine.graphics.Camera;
 
@@ -15,7 +16,7 @@ class State extends EntityContainer {
 		super(this);
 		this.width = 1280;
 		this.height = 720;
-		this.camera = new Camera(0, 0, width, height);
+		this.camera = new Camera(0, 0, 800, 600, this);
 		this.init(config);
 	}
 
@@ -23,10 +24,17 @@ class State extends EntityContainer {
 		super.update(elapsed);
 	}
 
-	override public function render(framebuffer:Framebuffer) {
-		this.camera.set(framebuffer.g2);
-		super.render(framebuffer);
-		this.camera.unset(framebuffer.g2);
+	override public function render(framebuffer:Canvas) {
+		this.camera.begin(true, kha.Color.Cyan);
+		this.camera.applyTransformations();
+		super.render(this.camera.frame);
+		this.camera.undoTransformations();
+		this.camera.end();
+
+		framebuffer.g2.begin();
+		this.camera.render(framebuffer);
+		this.camera.renderUI(framebuffer);
+		framebuffer.g2.end();
 	}
 
 	public function init(configFilename) {
@@ -49,7 +57,6 @@ class State extends EntityContainer {
 				element.dimensions.height,
 				this
 			);
-			sprite.debug = true;
 			this.add(sprite);
 		}
 	}

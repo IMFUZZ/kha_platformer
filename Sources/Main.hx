@@ -3,18 +3,26 @@ package;
 import kha.System;
 import kha.Scheduler;
 import kha.Assets;
+import kha.WindowOptions;
 
 class Main {
-	public static var config:Dynamic = {
-		title: "Project",
-		width: 1280,
-		height: 720
+	public static var config:WindowOptions = {
+		width: 1920,
+		height: 1080,
+		mode : Mode.Fullscreen,
+        title : 'Project',
+        windowedModeOptions : {
+            resizable:false
+        }
 	};
 
 	public static function main() {
-		System.init(config, function () {
-			Assets.loadEverything(onAssetsLoaded);
-		});
+		System.initEx(
+			'Project', 
+			[config],
+			function(val:Int) {},
+			function () { Assets.loadEverything(onAssetsLoaded); }
+		);
 	}
 
 	public static function onAssetsLoaded() {

@@ -30,10 +30,6 @@ class PhysSprite extends Sprite {
 		}	
 	}
 
-	override public function render(framebuffer: Framebuffer): Void {
-		super.render(framebuffer);
-	}
-
 	public function setBody(bodyType:BodyType) {
 		this.body = new Body(bodyType, new Vec2(this.x, this.y));
 		this.body.cbTypes.add(cast(this.state, PlayState).anyCbType);

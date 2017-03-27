@@ -1,6 +1,6 @@
 package engine.graphics;
 
-import kha.Framebuffer;
+import kha.Canvas;
 import kha.Image;
 import kha.Assets;
 
@@ -35,8 +35,8 @@ class Sprite implements IEntity {
 		
 	}
 
-	public function render(framebuffer: Framebuffer): Void {
-		var graphics = framebuffer.g2;
+	public function render(canvas:Canvas): Void {
+		var graphics = canvas.g2;
 		var imageX:Float = this.x - this.width/2;
 		var imageY:Float = this.y - this.height/2;
 		var rotationX:Float = this.x - this.state.camera.centerX;
@@ -47,7 +47,7 @@ class Sprite implements IEntity {
 			graphics.popTransformation();
 		}
 		if (debug) {
-			var graphics = framebuffer.g2;
+			var graphics = canvas.g2;
 			graphics.pushRotation(this.rotationAngle, rotationX, rotationY);
 			graphics.drawRect(imageX, imageY, this.width, this.height);
 			graphics.popTransformation();

@@ -9,6 +9,8 @@ class Particle extends PhysSprite {
 
 	public function new(x:Float, y:Float, width:Float, height:Float, playState:PlayState, physicsEnabled:Bool = true) {
 		super(x, y, width, height, playState, physicsEnabled);
+		this.setBody(nape.phys.BodyType.DYNAMIC);
+		this.body.mass = 1;
 	}
 
 	override public function update(elapsed:Float) {

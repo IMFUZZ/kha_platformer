@@ -2,7 +2,7 @@ package engine.character;
 
 import nape.geom.Vec2;
 import nape.phys.*;
-import kha.Framebuffer;
+import kha.Canvas;
 
 import engine.state.PlayState;
 import engine.graphics.PhysSprite;
@@ -47,9 +47,9 @@ class Character extends PhysSprite {
 		this.state.camera.update(elapsed);
 	}
 
-	override public function render(framebuffer:Framebuffer) {
-		super.render(framebuffer);
-		this.animationManager.render(framebuffer);
+	override public function render(canvas:Canvas) {
+		super.render(canvas);
+		this.animationManager.render(canvas);
 	}
 
 	override public function setBody(bodyType:BodyType):Void {

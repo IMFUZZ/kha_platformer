@@ -1,6 +1,6 @@
 package engine.base;
 
-import kha.Framebuffer;
+import kha.Canvas;
 import engine.state.State;
 
 class Empty implements IEntity {
@@ -16,13 +16,9 @@ class Empty implements IEntity {
 		this.state = state;
 	}
 
-	public function update(elapsed:Float):Void {
+	public function update(elapsed:Float):Void {}
 
-	}
-
-	public function render(framebuffer:Framebuffer):Void {
-
-	}
+	public function render(canvas:Canvas):Void {}
 
 	public function setPosition(x:Float, y:Float):Void {
 		this.x = x;

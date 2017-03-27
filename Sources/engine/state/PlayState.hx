@@ -37,7 +37,6 @@ class PlayState extends State {
 			sprite.enablePhysics(false);
 			sprite.body.rotation = element.rotationAngle;
 			sprite.enablePhysics(true);
-			sprite.debug = true;
 			if (element.image) {
 
 			}

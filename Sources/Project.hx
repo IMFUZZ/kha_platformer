@@ -1,7 +1,6 @@
 package;
 
 import kha.Framebuffer;
-import kha.Color;
 import kha.Scheduler;
 
 import engine.Shared;
@@ -43,9 +42,6 @@ class Project {
 	}
 
 	public function render(framebuffer:Framebuffer): Void {
-		framebuffer.g2.begin();
-		framebuffer.g2.clear(Color.Cyan);
 		this.state.render(framebuffer);
-		framebuffer.g2.end();
 	}
 }
