@@ -124,7 +124,7 @@ class InputManager {
 
 	public function onKeyDown(key:Key, char:String):Void {
 		if (debug) { trace("Key : " + key + " | char : " + char + " down"); }
-		var button:Button = identifyButtonFromKey(key, char);
+		var button:Button = this.identifyButtonFromKey(key, char);
 		if (button != null) {
 			var state = this.buttonStates.get(button);
 			if (state == 0.0) {
@@ -135,7 +135,7 @@ class InputManager {
 
 	public function onKeyUp(key:Key, char:String):Void {
 		if (debug) { trace("Key : " + key + " | char : " + char + " up"); }
-		var button:Button = identifyButtonFromKey(key, char);
+		var button:Button = this.identifyButtonFromKey(key, char);
 		if (button != null) {
 			var state = this.buttonStates.get(button);
 			if (state != 0.0) {

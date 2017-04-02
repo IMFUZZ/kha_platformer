@@ -16,7 +16,7 @@ class State extends EntityContainer {
 		super(this);
 		this.width = 1280;
 		this.height = 720;
-		this.camera = new Camera(0, 0, 800, 600, this);
+		this.camera = new Camera(0, 0, 1280, 720, this);
 		this.init(config);
 	}
 
@@ -26,9 +26,7 @@ class State extends EntityContainer {
 
 	override public function render(framebuffer:Canvas) {
 		this.camera.begin(true, kha.Color.Cyan);
-		this.camera.applyTransformations();
 		super.render(this.camera.frame);
-		this.camera.undoTransformations();
 		this.camera.end();
 
 		framebuffer.g2.begin();
@@ -40,7 +38,7 @@ class State extends EntityContainer {
 	public function init(configFilename) {
 		var config:Dynamic = haxe.Json.parse(
 			Reflect.getProperty(
-				Assets.blobs, 
+				Assets.blobs,
 				configFilename+"_json"
 			).toString()
 		);

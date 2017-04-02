@@ -51,7 +51,7 @@ class PhysSprite extends Sprite {
 	public function checkIfGrounded() {
 		var bodiesUnderChar:nape.phys.BodyList = this.space.bodiesInAABB(
 			new nape.geom.AABB(
-				this.body.bounds.x, 
+				this.body.bounds.x,
 				this.body.bounds.y+this.body.bounds.height, 
 				this.body.bounds.width, 
 				1), 

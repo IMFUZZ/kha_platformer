@@ -2,8 +2,8 @@ package engine.graphics;
 
 import kha.Canvas;
 import kha.Image;
-import kha.Assets;
 
+import engine.factories.GraphicsFactory;
 import engine.base.IEntity;
 import engine.state.State;
 
@@ -55,7 +55,7 @@ class Sprite implements IEntity {
 	}
 
 	public function loadGraphics(filename:String) {
-		this._image = Reflect.getProperty(Assets.images, filename);
+		this._image = GraphicsFactory.getImage(filename);
 	}
 
 	public function kill():Void {

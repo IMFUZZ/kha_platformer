@@ -60,18 +60,12 @@ class Camera extends Empty {
 
 	public function begin(?clear:Bool = false, clearColor:Color = null) {
 		this.frame.g2.begin(clear, clearColor);
+		this.applyTransformations();
 	}
 
 	public function end() {
+		this.undoTransformations();
 		this.frame.g2.end();
-	}
-
-	public function uiBegin() {
-		this.ui.g2.begin(false);
-	}
-
-	public function uiEnd() {
-		this.ui.g2.end();
 	}
 
 	public function applyTransformations() {
