@@ -5,12 +5,12 @@ import kha.Scheduler;
 import kha.Assets;
 import kha.WindowOptions;
 
+
 class Main {
 	public static var config:WindowOptions = {
-		width: 1920,
-		height: 1080,
-		mode : Mode.Fullscreen,
-        title : 'Project',
+		width: 800,
+		height: 600,
+        title : 'Platformer',
         windowedModeOptions : {
             resizable:false
         }
@@ -18,10 +18,10 @@ class Main {
 
 	public static function main() {
 		System.initEx(
-			'Project', 
+			'Project',
 			[config],
-			function(val:Int) {},
-			function () { Assets.loadEverything(onAssetsLoaded); }
+			function(val:Int) {}, // On window loaded
+			function () { Assets.loadEverything(onAssetsLoaded); } // On init completed
 		);
 	}
 

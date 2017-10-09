@@ -16,7 +16,7 @@ class State extends EntityContainer {
 		super(this);
 		this.width = 1280;
 		this.height = 720;
-		this.camera = new Camera(0, 0, 1280, 720, this);
+		this.camera = new Camera(0, 0, 800, 600, this);
 		this.init(config);
 	}
 

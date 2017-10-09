@@ -2,8 +2,7 @@ package engine.input;
 
 import kha.input.Gamepad;
 import kha.input.Keyboard;
-import kha.Key;
-
+import kha.input.KeyCode;
 import kha.math.Vector2;
 
 enum Button {
@@ -24,7 +23,7 @@ enum Button {
 }
 
 class InputManager {
-	public var debug:Bool = true;
+	public var debug:Bool = false;
 	public var controllable:IControllable;
 	public var previousButtonStates:Array<Map<Button, Float>> = new Array();
 	public var buttonStates:Map<Button, Float> = [
@@ -43,21 +42,21 @@ class InputManager {
 		L1 => 0.0,
 		L2 => 0.0
 	];
-	public var keyboardMapping:Map<String, Button> = [
-		"w" => UP,
-		"a" => LEFT,
-		"d" => RIGHT,
-		"s" => DOWN,
-		"enter" => START,
-		"backspace" => SELECT,
-		"j" => A,
-		"l" => B,
-		"k" => X,
-		" " => Y,
-		"u" => R1,
-		"i" => R2,
-		"o" => L1,
-		"p" => L2
+	public var keyboardMapping:Map<KeyCode, Button> = [
+		KeyCode.W => UP,
+		KeyCode.Return => START,
+		KeyCode.Backspace => SELECT,
+		KeyCode.Space => Y,
+		KeyCode.A => LEFT,
+		KeyCode.D => RIGHT,
+		KeyCode.S => DOWN,
+		KeyCode.J => A,
+		KeyCode.L => B,
+		KeyCode.K => X,
+		KeyCode.U => R1,
+		KeyCode.I => R2,
+		KeyCode.O => L1,
+		KeyCode.P => L2
 	];
 
 	public var gamepadMapping:Map<Int, Button> = [
@@ -73,7 +72,7 @@ class InputManager {
 
 	public var gamepadDeadZone = new Vector2(0.2, 0.2);
 	private var _gamepadID:Int = -1;
-	
+
 	public function new(controllable:IControllable) {
 		this.controllable = controllable;
 		this.setKeyboard(Keyboard.get());
@@ -81,8 +80,8 @@ class InputManager {
 	}
 
 	// - REMAPPING INPUTS
-	public function remapKeyboardKey(char:String, button:Button) {
-		this.keyboardMapping.set(char, button);
+	public function remapKeyboardKey(keyCode:KeyCode, button:Button) {
+		this.keyboardMapping.set(keyCode, button);
 	}
 
 	public function remapGamepadButton(gamepadButton:Int, button:Button) {
@@ -101,30 +100,13 @@ class InputManager {
 
 	// -------------------- INPUTS --------------------
 	// KEYBOARD
-	public function identifyButtonFromKey(key:Key, char:String):Button {
-		var id:String = switch (key) {
-			case UP: 'up';
-			case DOWN: 'down';
-			case LEFT: 'left';
-			case RIGHT: 'right';
-			case BACKSPACE: 'backspace';
-			case TAB: 'tab';
-			case ENTER: 'enter';
-			case SHIFT: 'shift';
-			case CTRL: 'ctrl';
-			case ALT: 'alt';
-			case ESC: 'esc';
-			case DEL: 'del';
-			case BACK: 'back';
-			case CHAR: char;
-			default: null;
-		};
-		return (id != null) ? this.keyboardMapping.get(id) : null;
+	public function identifyButtonFromKey(keyCode:KeyCode):Button {
+		return this.keyboardMapping.get(keyCode);
 	}
 
-	public function onKeyDown(key:Key, char:String):Void {
-		if (debug) { trace("Key : " + key + " | char : " + char + " down"); }
-		var button:Button = this.identifyButtonFromKey(key, char);
+	public function onKeyDown(keyCode:KeyCode):Void {
+		if (debug) { trace("KeyCode : " + keyCode + " down"); }
+		var button:Button = this.identifyButtonFromKey(keyCode);
 		if (button != null) {
 			var state = this.buttonStates.get(button);
 			if (state == 0.0) {
@@ -133,9 +115,9 @@ class InputManager {
 		}
 	}
 
-	public function onKeyUp(key:Key, char:String):Void {
-		if (debug) { trace("Key : " + key + " | char : " + char + " up"); }
-		var button:Button = this.identifyButtonFromKey(key, char);
+	public function onKeyUp(keyCode:KeyCode):Void {
+		if (debug) { trace("KeyCode : " + keyCode + " up"); }
+		var button:Button = this.identifyButtonFromKey(keyCode);
 		if (button != null) {
 			var state = this.buttonStates.get(button);
 			if (state != 0.0) {
@@ -149,7 +131,7 @@ class InputManager {
 		var buttons:Array<Button> = new Array<Button>();
 		switch (axis) {
 			// 0 LEFT ANALOG STICK (LEFT/RIGHT)
-			case 0: 
+			case 0:
 				if (value > 0) {
 					buttons.push(RIGHT);
 				} else if (value < 0) {
@@ -170,7 +152,7 @@ class InputManager {
 				}
 			// 3 RIGHT ANALOG STICK (LEFT/RIGHT)
 			// 4 RIGHT ANALOG STICK (UP/DOWN)
-			
+
 			// 2 LEFT TRIGGER
 			// 5 LEFT TRIGGER
 			default: null;
@@ -199,7 +181,7 @@ class InputManager {
 
 	public function setButtonStateIfExist(button:Button, state:Float) {
 		if (button != null) {
-			this.buttonStates.set(button, state); 
+			this.buttonStates.set(button, state);
 			this.previousButtonStates.push([button => state]);
 			if (this.previousButtonStates.length > 10) {
 				this.previousButtonStates.shift();

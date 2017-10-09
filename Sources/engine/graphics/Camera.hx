@@ -49,7 +49,7 @@ class Camera extends Empty {
 	override public function update(elapsed:Float):Void {
 		this.setPosition(this._target.x, this._target.y);
 	}
-	
+
 	override public function render(canvas:Canvas) {
 		Scaler.scale(this.frame, canvas, System.screenRotation);
 	}

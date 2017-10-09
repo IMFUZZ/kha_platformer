@@ -44,19 +44,19 @@ class PlayState extends State {
 		}
 		this.space.listeners.add(
 			new InteractionListener(
-				CbEvent.BEGIN, 
-				InteractionType.COLLISION, 
-				characterCbType, 
-				anyCbType, 
+				CbEvent.BEGIN,
+				InteractionType.COLLISION,
+				characterCbType,
+				anyCbType,
 				onCharacterBeginCollision
 			)
 		);
 		this.space.listeners.add(
 			new InteractionListener(
-				CbEvent.END, 
-				InteractionType.COLLISION, 
-				characterCbType, 
-				anyCbType, 
+				CbEvent.END,
+				InteractionType.COLLISION,
+				characterCbType,
+				anyCbType,
 				onCharacterEndCollision
 			)
 		);

@@ -8,7 +8,7 @@ import engine.base.IEntity;
 import engine.state.State;
 
 class Sprite implements IEntity {
-	public var debug:Bool = true;
+	public var debug:Bool = false;
 	public var alive:Bool = true;
 	public var x:Float;
 	public var y:Float;
