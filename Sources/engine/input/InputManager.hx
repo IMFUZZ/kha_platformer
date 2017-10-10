@@ -107,23 +107,13 @@ class InputManager {
 	public function onKeyDown(keyCode:KeyCode):Void {
 		if (debug) { trace("KeyCode : " + keyCode + " down"); }
 		var button:Button = this.identifyButtonFromKey(keyCode);
-		if (button != null) {
-			var state = this.buttonStates.get(button);
-			if (state == 0.0) {
-				this.setButtonStateIfExist(button, 1.0);
-			}
-		}
+		if (button != null) this.setButtonStateIfExist(button, 1.0);
 	}
 
 	public function onKeyUp(keyCode:KeyCode):Void {
 		if (debug) { trace("KeyCode : " + keyCode + " up"); }
 		var button:Button = this.identifyButtonFromKey(keyCode);
-		if (button != null) {
-			var state = this.buttonStates.get(button);
-			if (state != 0.0) {
-				this.setButtonStateIfExist(button, 0.0);
-			}
-		}
+		if (button != null) this.setButtonStateIfExist(button, 0.0);
 	}
 
 	// GAMEPAD

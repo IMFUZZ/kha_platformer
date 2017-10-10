@@ -1,7 +1,6 @@
 package;
 
 import kha.System;
-import kha.Scheduler;
 import kha.Assets;
 import kha.WindowOptions;
 
@@ -27,7 +26,5 @@ class Main {
 
 	public static function onAssetsLoaded() {
 		var game:Project = new Project();
-		System.notifyOnRender(game.render);
-		Scheduler.addTimeTask(game.update, 0, 1/60);
 	}
 }

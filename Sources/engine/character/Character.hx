@@ -19,7 +19,6 @@ class Character extends PhysSprite {
 	public var movement:Vec2 = new Vec2(0, 0);
 	public var player:Player;
 	public var pendingActions:Array<CharacterAction> = new Array<CharacterAction>();
-	
 	public var liftedObject:engine.objects.Object = null;
 
 	public var animationManager:AnimationManager;

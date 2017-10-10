@@ -1,8 +1,11 @@
 package engine;
 
+import engine.GameManager;
+
 class Shared {
-	static public var game:Project;
-	static public function init(game:Project) {
-		Shared.game = game;
+	static public var gameManager:GameManager;
+
+	static public function init(gameManager:GameManager) {
+		Shared.gameManager = gameManager;
 	}
 }
